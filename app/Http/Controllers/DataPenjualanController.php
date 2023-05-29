@@ -125,14 +125,15 @@ class DataPenjualanController extends Controller
         //SIMPAN ke table lapobt
         $tambah_lapobt=new \App\Lapobt;
         $tambah_lapobt->tgl_jual = $request->tgl_jual;
-        foreach($tambah_lapobt as $value){
-            $value->kd_brg = $request->kd_brg;
-        $value->nm_brg = $request->nm_brg;
-        $value->qty_jual = $request->qty_jual;
+        foreach ($request->nm_brg as $key => $value) {
+            $tambah_lapobt->nm_brg = $value;
         }
-
-        
-        dd($value);
+        foreach ($request->kd_brg as $key => $value) {
+            $tambah_lapobt->kd_brg = $value;
+        }
+        foreach ($request->qty_jual as $key => $value) {
+            $tambah_lapobt->qty_jual = $value;
+        }
         $tambah_lapobt->save();
         
         //SIMPAN ke table jurnal bagian kredit

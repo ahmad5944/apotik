@@ -55,6 +55,7 @@ class LaporanController extends Controller
     {
         $periode=$request->get('periode');
         $jenis=$request->get('jenis');
+        // 
         if($jenis=='cetak') {
             if($periode == 'All') {
                 $bb = \App\Laporan::All();
