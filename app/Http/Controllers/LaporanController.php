@@ -55,10 +55,10 @@ class LaporanController extends Controller
     {
         $periode=$request->get('periode');
         $jenis=$request->get('jenis');
-        // 
+        // test
         if($jenis=='cetak') {
             if($periode == 'All') {
-                $bb = \App\Laporan::All();
+                $bb = \App\Laporan::where('keterangan', '!=', 'Retur penjualan')->get();
                 $akun=\App\Akun::All();
                 $pdf = PDF::loadview('laporan.cetak',['laporan'=>$bb,'akun' => $akun])->setPaper('A4','landscape');
                 return $pdf->stream(); 
@@ -97,10 +97,10 @@ class LaporanController extends Controller
             }
         }elseif($jenis=='kasmasuk') {
             if($periode == 'All') {
-                $bb = \App\Laporan::All();
+                $bb = \App\Laporan::where('keterangan', 'Kas')->get();
                 $akun = \App\Akun::All();
                 $km = \App\Kasmasuk::All();
-                $keterangan=$request->get ('kas');
+                $keterangan=$request->get('kas');
                 $pdf = PDF::loadview('laporan.kasmasuk',['laporan'=>$bb, 'kasmasuk'=>$km, 'akun'=>$akun, 'kas'=>$keterangan])->setPaper('A4','landscape');
                 return $pdf->stream();
             }elseif($periode == 'periode'){
