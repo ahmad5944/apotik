@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Barang;
+use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,29 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $date   = Barang::select('tgl')->get();
+        $arr = [];
+        foreach ($date as $key => $value) {
+            // dd($value->pluck('tgl'));
+            // $c = new Carbon($value->tgl);
+            // $a = $c->subMonth()->format('Y-m-d');
+            // $test = $value;
+            // // dd($a);
+            // $arr[] = $a;
+            // dd($arr);
+
+            // $tests = $test->subMonth()->month;
+            // dd($tests);
+            // new Carbon('24-06-01');
+            // dd($test);
+            // $parsingJson    = json_encode($test, true);
+        }
+        // dd($parsingJson);
+
+        $datas  = Barang::all();
+        // dd($test->subMonth());
+        Carbon::now()->subMonths();
+        return view('home', compact('datas'));
     }
 }

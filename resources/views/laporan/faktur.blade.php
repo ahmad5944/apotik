@@ -165,13 +165,22 @@
             @endforeach
 
             <tr class="total">
-                <td></td>
+                <td>Total</td>
                 <td>
                     Total: Rp {{ number_format($total) }}
                 </td>
             </tr>
-            <tr>
-                <td colspan="3">p</td>
+            <tr >
+                <td>Bayar</td>
+                <td>
+                    Rp {{ number_format($bayar['bayar']) ?? 0 }}
+                </td>
+            </tr>
+            <tr >
+                <td>Kembalian</td>
+                <td>
+                    Rp {{ number_format($bayar['bayar'] - $total) ?? 0 }}
+                </td>
             </tr>
         </table>
     </div>

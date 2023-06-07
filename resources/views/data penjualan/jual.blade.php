@@ -78,11 +78,25 @@
                                 </tr>
                                 @php($total += $temp->subtotal)
                             @endforeach
-                            <tr>
+                            {{-- <tr>
                                 <td colspan="3"></td>
-                                <td><input name="total" class="form-control" type="hidden"
+                                <td colspan="2"><input name="total" class="form-control" type="hidden"
                                         value="{{ $total }}">Total {{ number_format($total) }}</a>
-                                <td></td>
+                                </td>
+                            </tr> --}}
+                            <tr>
+                                <td colspan="3">Bayar</td>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <input type="text" id="subtotal" class="form-control" placeholder="Harga Barang" value="{{ $total }}" readonly="">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="bayar" name="bayar" class="form-control" placeholder="Input Bayar">
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <input type="text" id="total" class="form-control" placeholder="Total" readonly="">
+                                    </div>
+
                                 </td>
                             </tr>
                         </tbody>
@@ -92,4 +106,16 @@
             </div>
         </div>
     </form>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $("#bayar").keyup(function() {
+            var subtotal  = $("#subtotal").val();
+            var bayar = $("#bayar").val();
+
+            var total = parseInt(bayar) - parseInt(subtotal);
+            $("#total").val(total);
+        });
+    });
+    </script>
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 @include('sweetalert::alert')
-<form action="{{route('resep.update', [$resep->kd_rs])}}" method="POST">
+<form action="{{route('resep.update', [$resep->id])}}" method="POST">
     @csrf
     <input type="hidden" name="_method" value="PUT">
     <fieldset>

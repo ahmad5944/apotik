@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Alert;
 use App\Resep;
+use App\Barang;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 class ResepController extends Controller
@@ -16,8 +17,10 @@ class ResepController extends Controller
      */
     public function index()
     {
-        $resep=\App\Resep::All();
-        return view('admin.resep',['resep'=>$resep]);
+        $resep  = Resep::All();
+        $obat   = Barang::All();
+
+        return view('admin.resep', compact('resep','obat'));
     }
 
     /**
@@ -38,13 +41,20 @@ class ResepController extends Controller
      */
     public function store(Request $request)
     {
-        $tambah_resep=new \App\Resep;
-        $tambah_resep->kd_rs = $request->addkdrs;
-        $tambah_resep->tgl_rs = $request->addtglrs;
-        $tambah_resep->nama = $request->addnama;
-        $tambah_resep->umur = $request->addumur;
-        $tambah_resep->telepon = $request->addtelepon;
-        $tambah_resep->save();
+
+        foreach ($request->addmore as $key => $value) {
+            $tambah_resep           = new Resep;
+
+            $tambah_resep->kd_brg   = $value['kd_brg'];
+            $tambah_resep->qty      = $value['qty'];
+            $tambah_resep->kd_rs    = $request->addkdrs;
+            $tambah_resep->tgl_rs   = $request->addtglrs;
+            $tambah_resep->nama     = $request->addnama;
+            $tambah_resep->umur     = $request->addumur;
+            $tambah_resep->telepon  = $request->addtelepon;
+            $tambah_resep->save();
+        }
+
         Alert::success('Tersimpan ','Data Resep Berhasil Disimpan');
         return redirect()->route('resep.index');
     }
@@ -68,7 +78,7 @@ class ResepController extends Controller
      */
     public function edit($id)
     {
-        $resep_edit = \App\Resep::findOrFail($id);
+        $resep_edit = Resep::findOrFail($id);
         return view('admin.editResep',['resep'=>$resep_edit]);
     }
 
@@ -81,7 +91,7 @@ class ResepController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $update_resep = \App\Resep::findOrFail($id);
+        $update_resep = Resep::findOrFail($id);
         $update_resep->kd_rs=$request->get('addkdrs');
         $update_resep->tgl_rs=$request->get('addtglrs');
         $update_resep->nama=$request->get('addnama');
@@ -100,7 +110,7 @@ class ResepController extends Controller
      */
     public function destroy($id)
     {
-        $resep=\App\Resep::findOrFail($id);
+        $resep = Resep::findOrFail($id);
         $resep->delete();
         Alert::success('Terhapus ','Data resep berhasil dihapus');
         return redirect()->route('resep.index');

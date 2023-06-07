@@ -24,38 +24,12 @@ class LaporanController extends Controller
         return view('laporan.laporan');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request)
     {
         $periode=$request->get('periode');
         $jenis=$request->get('jenis');
         // test
+
         if($jenis=='cetak') {
             if($periode == 'All') {
                 $bb = \App\Laporan::where('keterangan', '!=', 'Retur penjualan')->get();
@@ -118,29 +92,26 @@ class LaporanController extends Controller
                     // dd($data);
                 $pdf = PDF::loadview('laporan.kasmasuk',['laporan'=>$bb, 'kasmasuk'=>$km, 'akun'=>$akun, 'kas'=>$keterangan])->setPaper('A4','landscape');
                 return $pdf->stream();
-            
-            }elseif($jenis=='lapobt') {
-                if($periode == 'All') {
-                    $data = \App\Datapenjualan::All();
-                    $lo = \App\Lapobt::All();
-                    $pdf = PDF::loadview('laporan.lapobt',['datapenjualan'=>$data, 'lapobt'=>$lo])->setPaper('A4','landscape');
-                    return $pdf->stream();
-                }elseif($periode == 'periode'){
-                    $tglawal=$request->get('tglawal');
-                    $tglakhir=$request->get('tglakhir');
-                    $lo=\App\Lapobt::All();
-                    // dump($tglawal);
-                    // dump($tglakhir);
-                    $data=DB::table('datapenjualan')
-                        ->whereBetween('tgl_jual', [$tglawal,$tglakhir])
-                        ->orderby('tgl_jual','ASC')
-                        ->get();
-                        // dd($data);
-                    $pdf = PDF::loadview('laporan.lapobt',['datapenjualan'=>$data, 'lapobt'=>$lo])->setPaper('A4','landscape');
-                    return $pdf->stream();
-                
-                
-                }
+            }
+        }elseif($jenis=='lapobt') {
+            if($periode == 'All') {
+                $data = \App\Datapenjualan::All();
+                $lo = \App\Lapobt::All();
+                $pdf = PDF::loadview('laporan.lapobt',['datapenjualan'=>$data, 'lapobt'=>$lo])->setPaper('A4','landscape');
+                return $pdf->stream();
+            }elseif($periode == 'periode'){
+                $tglawal=$request->get('tglawal');
+                $tglakhir=$request->get('tglakhir');
+                $lo=\App\Lapobt::All();
+                // dump($tglawal);
+                // dump($tglakhir);
+                $data=DB::table('datapenjualan')
+                    ->whereBetween('tgl_jual', [$tglawal,$tglakhir])
+                    ->orderby('tgl_jual','ASC')
+                    ->get();
+                    // dd($data);
+                $pdf = PDF::loadview('laporan.lapobt',['datapenjualan'=>$data, 'lapobt'=>$lo])->setPaper('A4','landscape');
+                return $pdf->stream();
             }
         }
     }
