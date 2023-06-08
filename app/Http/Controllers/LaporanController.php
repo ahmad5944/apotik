@@ -42,10 +42,10 @@ class LaporanController extends Controller
 
                 $akun=\App\Akun::All();
                 $bb=DB::table('jurnal')
-                        ->whereBetween('tgl_jurnal', [$tglawal,$tglakhir])
-                        ->orderby('tgl_jurnal','ASC')
-                        ->get();
-                        // dd($bb);
+                    ->where('keterangan', '!=', 'Retur penjualan')
+                    ->whereBetween('tgl_jurnal', [$tglawal,$tglakhir])
+                    ->orderby('tgl_jurnal','ASC')
+                    ->get();
                 $pdf = PDF::loadview('laporan.cetak',['laporan'=>$bb,'akun' => $akun])->setPaper('A4','landscape');
                 return $pdf->stream();
             }

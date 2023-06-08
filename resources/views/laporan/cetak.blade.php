@@ -27,7 +27,7 @@
             <tr>
                 <th width="5%">Tanggal Transaksi</th>
                 <th width="5%">No Jurnal</th>
-                <th width="15%">Keterangan</th>
+                <th width="15%">No Akun/Keterangan</th>
                 <th width="5%">Debet</th>
                 <th width="5%">Kredit</th>
             </tr>
@@ -45,7 +45,7 @@
                         <tr>
                             <td>{{ $bb->tgl_jurnal }}</td>
                             <td>{{ $bb->no_jurnal }}</td>
-                            <td> {{ $bb->keterangan }}</td>
+                            <td>{{ $bb->no_akun ?? ''}} / {{ $bb->keterangan }}</td>
                             <td>{{ number_format($bb->debet) }}</td>
                             <td>{{ number_format($bb->kredit) }}</td>
                         </tr>
