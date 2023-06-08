@@ -31,6 +31,20 @@
                 <input id="addtelepon" type="text" name="addtelepon" class="form-control" value="{{$resep->telepon}}">
             </div>
 
+            <div class="col-md-5">
+                <label for="Barang">Barang</label>
+                <select class="form-control" name="kd_brg" style="width: 250px;">
+                    @foreach ($obat as $item)
+                        <option value="{{ $item->kd_brg }}" {{ $item->kd_brg == $resep->kd_brg ? 'selected' : '' }} >{{ $item->nm_brg }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="col-md-5">
+                <label for="Qty">Qty</label>
+                <input id="qty" type="text" name="qty" class="form-control" value="{{$resep->qty}}">
+            </div>
+
     </fieldset>
     <div class="col-md-10">
         <input type="submit" class="btn btn-success btn-send" value="Update">

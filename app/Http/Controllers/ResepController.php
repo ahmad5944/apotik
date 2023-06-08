@@ -79,7 +79,9 @@ class ResepController extends Controller
     public function edit($id)
     {
         $resep_edit = Resep::findOrFail($id);
-        return view('admin.editResep',['resep'=>$resep_edit]);
+        $obat   = Barang::All();
+
+        return view('admin.editResep',['resep' => $resep_edit, 'obat' => $obat]);
     }
 
     /**
@@ -92,11 +94,15 @@ class ResepController extends Controller
     public function update(Request $request, $id)
     {
         $update_resep = Resep::findOrFail($id);
-        $update_resep->kd_rs=$request->get('addkdrs');
-        $update_resep->tgl_rs=$request->get('addtglrs');
-        $update_resep->nama=$request->get('addnama');
-        $update_resep->umur=$request->input('addumur'); 
-        $update_resep->telepon=$request->get('addtelepon');
+        $req = $request->all();
+
+        $update_resep->kd_rs        = $request->get('addkdrs');
+        $update_resep->tgl_rs       = $request->get('addtglrs');
+        $update_resep->nama         = $request->get('addnama');
+        $update_resep->umur         = $request->input('addumur'); 
+        $update_resep->telepon      = $request->get('addtelepon');
+        $update_resep->kd_brg       = $req['kd_brg'];
+        $update_resep->qty          = $req['qty'];
         $update_resep->save();
         Alert::success('Update', 'Data Resep Berhasil Diupdate');
         return redirect()->route( 'resep.index');

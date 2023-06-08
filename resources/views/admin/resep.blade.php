@@ -54,9 +54,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalScrollable" role="dialog" aria-labelledby="exampleModalScrollableTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal fade" id="exampleModalScrollable" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalScrollableTitle">Tambah Data Resep</h5>
@@ -108,7 +107,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <select class="form-control" name="addmore[0][kd_brg]" style="width: 350px;">
+                                        <select class="form-control" name="addmore[0][kd_brg]" style="width: 250px;">
                                             @foreach ($obat as $item)
                                                 <option value="{{ $item->kd_brg }}">
                                                     {{ $item->nm_brg }}</option>
@@ -139,7 +138,7 @@
 
             $("#dynamicTable").append('<tr><td><select class="form-control" name="addmore[' +
                 i +
-                '][kd_brg]" style="width: 350px;"><?php foreach ($obat as $item): ?><option value="{{ $item->kd_brg }}">{{ $item->nm_brg }}</option><?php endforeach; ?></select></td><td><input class="form-control" type="text" name="addmore[' +
+                '][kd_brg]" style="width: 250px;"><?php foreach ($obat as $item): ?><option value="{{ $item->kd_brg }}">{{ $item->nm_brg }}</option><?php endforeach; ?></select></td><td><input class="form-control" type="text" name="addmore[' +
                 i +
                 '][qty]"></td><td><button type="button" class="btn btn-danger remove-tr">-</button></td></tr>'
             );
@@ -153,7 +152,6 @@
         var path = "{{ route('apiBarang') }}";
 
         $('#select2').select2({
-            dropdownParent: "#exampleModalScrollable",
             placeholder: 'Pilih Barang',
             ajax: {
                 url: path,

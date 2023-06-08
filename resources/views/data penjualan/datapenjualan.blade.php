@@ -24,9 +24,11 @@
                                 <td>{{ $jual->tgl_jual }}</td>
                                 <td>Rp. {{ number_format($jual->total) }}</td>
                                 <td width="30%">
-                                    <a href="{{ url('/datapenjualan-jual/' . Crypt::encryptString($jual->no_jual)) }}"
-                                        class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
-                                            class="fas fa-edit fa-sm text-white-50"></i> Jual</a>
+                                    @if (empty($jual->noJual->no_jual))
+                                        <a href="{{ url('/datapenjualan-jual/' . Crypt::encryptString($jual->no_jual)) }}"
+                                            class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
+                                                class="fas fa-edit fa-sm text-white-50"></i> Jual</a>
+                                    @endif
                                     <a href="{{ route('cetak.order_pdf', [Crypt::encryptString($jual->no_jual)]) }}"
                                         target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm">
                                         <i class="fas fa-print fa-sm text-white-50"></i> Cetak slip pembayaran</a>

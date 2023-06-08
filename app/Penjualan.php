@@ -14,4 +14,9 @@ class Penjualan extends Model
     protected $table = "penjualan";
     protected $fillable = ['no_jual', 'tgl_jual', 'total','kd_rs'];
 
+    public function noJual()
+    {
+        return $this->belongsTo('App\Detaildatapenjualan', 'no_jual', 'no_jual');
+    }
+
 }

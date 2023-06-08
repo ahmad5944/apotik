@@ -7,6 +7,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 use App\Detaildatapenjualan;
 use App\Datapenjualan;
+use App\Penjualan;
 use App\Jurnal;
 use App\Lapobt;
 use DB;
@@ -19,7 +20,8 @@ class DataPenjualanController extends Controller
 
     public function index()
     {
-        $jual=\App\Penjualan::All();
+        $jual = Penjualan::with('noJual')->get();
+        
         return view('data penjualan.datapenjualan',['penjualan'=>$jual]);
     }
  
@@ -31,14 +33,14 @@ class DataPenjualanController extends Controller
         $noj = 1;
         $formatj=sprintf("%03s", abs((int)$noUrutAkhirj + 1)). '/' . $AWALJurnal .'/' . $bulanRomawij[date('n')] .'/' . date('Y');
     
-
         $decrypted = Crypt::decryptString($id);
 
-        $datapenjualan  = DB::table('datapenjualan')->where('no_jual',$decrypted)->get();
-        $detail         = DB::table('tampil_penjualan')->where('no_jual',$decrypted)->get();
-        $penjualan      = DB::table('penjualan')->where('no_jual',$decrypted)->get();
-        $akunkas        = DB::table('setting')->where('nama_transaksi','Kas')->get();
-        $akunpenjualan  = DB::table('setting')->where('nama_transaksi','datapenjualan')->get();
+        $datapenjualan      = DB::table('datapenjualan')->where('no_jual',$decrypted)->get();
+        $detail             = DB::table('tampil_penjualan')->where('no_jual',$decrypted)->get();
+        $detailpenjualan    = Detaildatapenjualan::where('no_jual',$decrypted)->first();
+        $penjualan          = DB::table('penjualan')->where('no_jual',$decrypted)->get();
+        $akunkas            = DB::table('setting')->where('nama_transaksi','Kas')->get();
+        $akunpenjualan      = DB::table('setting')->where('nama_transaksi','datapenjualan')->get();
         return view('data penjualan.jual', compact(
             'detail',
             'decrypted',
@@ -46,7 +48,8 @@ class DataPenjualanController extends Controller
             'formatj',
             'akunkas',
             'akunpenjualan',
-            'datapenjualan'
+            'datapenjualan',
+            'detailpenjualan'
         ));
     }
 
