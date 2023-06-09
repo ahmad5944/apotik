@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['role:admin']], function() {
     Route::resource('/user','userController');
     Route::get('/user/hapus/{id}','userController@destroy');
